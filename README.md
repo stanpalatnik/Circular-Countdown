@@ -6,29 +6,14 @@ Circular Count Down
 
 Example
 -------
-
-    <input class="knob days" data-readOnly="true" data-width="150" data-displayPrevious=true data-fgColor="#66EE66" data-skin="tron" data-thickness=".2" data-min="0" data-max="365" value="75">
-	
-	<input class="knob hour" data-readOnly="true" data-width="150" data-min="0" data-max="24" data-displayPrevious=true data-fgColor="#800080" data-skin="tron" data-thickness=".2" value="75">
-	
-	<input class="knob minute" data-readOnly="true" data-width="150" data-min="0" data-max="60" data-displayPrevious=true data-fgColor="#ffec03" data-skin="tron" data-thickness=".2" value="75">
-	
 	<input class="knob second" data-readOnly="true" data-width="150" data-min="0" data-max="60" data-displayPrevious=true data-fgColor="#00CED1" data-skin="tron" data-thickness=".2" value="75">
 
     <script>
-		$(".ccounter").ccountdown(2013,5,25,'18:00'); //only need to pass target date and time
+		$(".ccounter").ccountdown(60); //only need to pass the amount of seconds to count down
     </script>
 
 You can change the style of each dial. See documentation of <a href="https://github.com/aterrien/jQuery-Knob">jQuery Knob</a>
 
-
-Set only target date
--------
-	Pass the target year, month, day, and time (24-hour) in the ccountdown function, rest of handled by circular countdown script.
-    <script>
-		e.g. year -> 2013, Month -> 5, Day -> 25, Time -> 18:00
-		$(".ccounter").ccountdown(2013,5,25, '18:00');
-    </script>
 
 Supported browser
 -------
