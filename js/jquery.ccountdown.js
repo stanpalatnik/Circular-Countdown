@@ -9,49 +9,78 @@
  *
  * Thanks to http://www.javascriptkit.com/
  */
-(function($) {
-	$.fn.ccountdown = function(_yr, _m, _d, _t, callback) {
+(function($){
+	$.fn.ccountdown = function(seconds){
 		var $this = this;
-		var interval;
-		var _montharray = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-		var _today = new Date();
-		// calling function first time so that it wll setup remaining time
-		var _changeTime = function() {
-			var _today = new Date();
-			var _todayy = _today.getYear();
-			if (_todayy < 1000)
-				_todayy += 1900;
-			var _todaym = _today.getMonth();
-			var _todayd = _today.getDate();
-			var _todayh = _today.getHours();
-			var _todaymin = _today.getMinutes();
-			var _todaysec = _today.getSeconds();
-			_todaysec = "0" + _todaysec;
-			_todaysec = _todaysec.substr(_todaysec.length - 2);
-			var _todaystring = _montharray[_todaym] + " " + _todayd + ", " + _todayy + " " + _todayh + ":" + _todaymin + ":" + _todaysec;
-			var _futurestring = _montharray[_m - 1] + " " + _d + ", " + _yr + " " + _t;
-			/* calculation of remaining days, hrs, min, and secs */
-			_dd = Date.parse(_futurestring) - Date.parse(_todaystring);
-			_dday = Math.floor(_dd / (60 * 60 * 1000 * 24) * 1);
-			_dhour = Math.floor((_dd % (60 * 60 * 1000 * 24)) / (60 * 60 * 1000) * 1);
-			_dmin = Math.floor(((_dd % (60 * 60 * 1000 * 24)) % (60 * 60 * 1000)) / (60 * 1000) * 1);
-			_dsec = Math.floor((((_dd % (60 * 60 * 60 * 1000 * 24)) % (60 * 60 * 1000)) % (60 * 1000)) / 1000 * 1);
+		var _currSeconds = seconds;
+		var timeOut;
+		_changeTime(); // calling function first time so that it wll setup remaining time
+		function _changeTime() {
 			var el = $($this);
-			var $ss = el.find(".second"), $mm = el.find(".minute"), $hh = el.find(".hour"), $dd = el.find(".days");
-			$ss.val(_dsec).trigger("change");
-			$mm.val(_dmin).trigger("change");
-			$hh.val(_dhour).trigger("change");
-			$dd.val(_dday).trigger("change");
-			if (_dd == 0){
-			    window.clearInterval(interval);
-			    if (typeof callback == 'function'){
-			    	callback.call(this);
-			    }
+			var $ss = el.find(".second");
+			$ss.val(_currSeconds).trigger("change");
+			if(_currSeconds <= 0) {
+				clearInterval(timeOut);
 			}
-		};
-		
-		_changeTime();
-
-		interval = setInterval(_changeTime, 1000);
+			_currSeconds-=1;
+		}
+		timeOut = setInterval(_changeTime ,1000);
 	};
 })(jQuery);
+
+$(function() {
+	$(".knob").knob({
+		/*change : function (value) {
+		 //console.log("change : " + value);
+		 },
+		 release : function (value) {
+		 console.log("release : " + value);
+		 },
+		 cancel : function () {
+		 console.log("cancel : " + this.value);
+		 },*/
+		draw : function () {
+
+			// "tron" case
+			if(this.$.data('skin') == 'tron') {
+
+				var a = this.angle(this.cv)  // Angle
+					, sa = this.startAngle          // Previous start angle
+					, sat = this.startAngle         // Start angle
+					, ea                            // Previous end angle
+					, eat = sat + a                 // End angle
+					, r = true;
+
+				this.g.lineWidth = this.lineWidth;
+
+				this.o.cursor
+				&& (sat = eat - 0.3)
+				&& (eat = eat + 0.3);
+
+				if (this.o.displayPrevious) {
+					ea = this.startAngle + this.angle(this.value);
+					this.o.cursor
+					&& (sa = ea + 0.3)
+					&& (ea = ea - 0.3);
+					this.g.beginPath();
+					this.g.strokeStyle = this.previousColor;
+					this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sa, ea, false);
+					this.g.stroke();
+				}
+
+				this.g.beginPath();
+				this.g.strokeStyle = r ? this.o.fgColor : this.fgColor ;
+				this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sat, eat, false);
+				this.g.stroke();
+
+				this.g.lineWidth = 2;
+				this.g.beginPath();
+				this.g.strokeStyle = this.o.fgColor;
+				this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+				this.g.stroke();
+
+				return false;
+			}
+		}
+	});
+});

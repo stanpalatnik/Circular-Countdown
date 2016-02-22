@@ -72,7 +72,7 @@
                 }
                 s.init();
                 s._configure()
-                 ._draw();
+                    ._draw();
             };
 
             if(this.$.data('kontroled')) return;
@@ -89,8 +89,8 @@
 
                     // UI
                     cursor : (this.$.data('cursor') === true && 30)
-                                || this.$.data('cursor')
-                                || 0,
+                    || this.$.data('cursor')
+                    || 0,
                     thickness : this.$.data('thickness') || 0.35,
                     lineCap : this.$.data('linecap') || 'butt',
                     width : this.$.data('width') || 200,
@@ -149,14 +149,14 @@
             (!this.o.displayInput) && this.$.hide();
 
             this.$c = $('<canvas width="' +
-                            this.o.width + 'px" height="' +
-                            this.o.height + 'px"></canvas>');
+                this.o.width + 'px" height="' +
+                this.o.height + 'px"></canvas>');
             this.c = this.$c[0].getContext("2d");
 
             this.$
                 .wrap($('<div style="' + (this.o.inline ? 'display:inline;' : '') +
-                        'width:' + this.o.width + 'px;height:' +
-                        this.o.height + 'px; margin-right: 20px;"></div>'))
+                    'width:' + this.o.width + 'px;height:' +
+                    this.o.height + 'px; margin-right: 20px;"></div>'))
                 .before(this.$c);
 
             if (this.v instanceof Object) {
@@ -209,9 +209,9 @@
             var touchMove = function (e) {
 
                 var v = s.xy2val(
-                            e.originalEvent.touches[s.t].pageX,
-                            e.originalEvent.touches[s.t].pageY
-                            );
+                    e.originalEvent.touches[s.t].pageX,
+                    e.originalEvent.touches[s.t].pageY
+                );
 
                 if (v == s.cv) return;
 
@@ -321,14 +321,14 @@
                         , function (e) {
                             e.preventDefault();
                             s._xy()._mouse(e);
-                         }
+                        }
                     )
                     .bind(
                         "touchstart"
                         , function (e) {
                             e.preventDefault();
                             s._xy()._touch(e);
-                         }
+                        }
                     );
                 this.listen();
             } else {
@@ -379,8 +379,8 @@
             var rgb;
             h = h.substring(1,7)
             rgb = [parseInt(h.substring(0,2),16)
-                   ,parseInt(h.substring(2,4),16)
-                   ,parseInt(h.substring(4,6),16)];
+                ,parseInt(h.substring(2,4),16)
+                ,parseInt(h.substring(4,6),16)];
             return "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + a + ")";
         };
 
@@ -430,9 +430,9 @@
             var a, ret;
 
             a = Math.atan2(
-                        x - (this.x + this.w2)
-                        , - (y - this.y - this.w2)
-                    ) - this.angleOffset;
+                    x - (this.x + this.w2)
+                    , - (y - this.y - this.w2)
+                ) - this.angleOffset;
 
             if(this.angleArc != this.PI2 && (a < 0) && (a > -0.5)) {
                 // if isset angleArc option, set to min if .5 under min
@@ -442,7 +442,7 @@
             }
 
             ret = ~~ (0.5 + (a * (this.o.max - this.o.min) / this.angleArc))
-                    + this.o.min;
+                + this.o.min;
 
             this.o.stopper
             && (ret = max(min(ret, this.o.max), this.o.min));
@@ -454,19 +454,19 @@
             // bind MouseWheel
             var s = this,
                 mw = function (e) {
-                            e.preventDefault();
-                            var ori = e.originalEvent
-                                ,deltaX = ori.detail || ori.wheelDeltaX
-                                ,deltaY = ori.detail || ori.wheelDeltaY
-                                ,v = parseInt(s.$.val()) + (deltaX>0 || deltaY>0 ? s.o.step : deltaX<0 || deltaY<0 ? -s.o.step : 0);
+                    e.preventDefault();
+                    var ori = e.originalEvent
+                        ,deltaX = ori.detail || ori.wheelDeltaX
+                        ,deltaY = ori.detail || ori.wheelDeltaY
+                        ,v = parseInt(s.$.val()) + (deltaX>0 || deltaY>0 ? s.o.step : deltaX<0 || deltaY<0 ? -s.o.step : 0);
 
-                            if (
-                                s.cH
-                                && (s.cH(v) === false)
-                            ) return;
+                    if (
+                        s.cH
+                        && (s.cH(v) === false)
+                    ) return;
 
-                            s.val(v);
-                        }
+                    s.val(v);
+                }
                 , kval, to, m = 1, kv = {37:-s.o.step, 38:s.o.step, 39:s.o.step, 40:-s.o.step};
 
             this.$
@@ -564,35 +564,35 @@
             this.endAngle = 1.5 * Math.PI + this.angleOffset + this.angleArc;
 
             var s = max(
-                            String(Math.abs(this.o.max)).length
-                            , String(Math.abs(this.o.min)).length
-                            , 2
-                            ) + 2;
+                    String(Math.abs(this.o.max)).length
+                    , String(Math.abs(this.o.min)).length
+                    , 2
+                ) + 2;
 
             this.o.displayInput
-                && this.i.css({
-                        'width' : ((this.o.width / 2 + 4) >> 0) + 'px'
-                        ,'height' : ((this.o.width / 3) >> 0) + 'px'
-                        ,'position' : 'absolute'
-                        ,'vertical-align' : 'middle'
-                        ,'margin-top' : ((this.o.width / 3) >> 0) + 'px'
-                        ,'margin-left' : '-' + ((this.o.width * 3 / 4 + 2) >> 0) + 'px'
-                        ,'border' : 0
-                        ,'background' : 'none'
-                        ,'font' : 'bold ' + ((this.o.width / s) >> 0) + 'px Arial'
-                        ,'text-align' : 'center'
-                        ,'color' : this.o.inputColor || this.o.fgColor
-                        ,'padding' : '0px'
-                        ,'-webkit-appearance': 'none'
-                        })
-                || this.i.css({
-                        'width' : '0px'
-                        ,'visibility' : 'hidden'
-                        });
+            && this.i.css({
+                'width' : ((this.o.width / 2 + 4) >> 0) + 'px'
+                ,'height' : ((this.o.width / 3) >> 0) + 'px'
+                ,'position' : 'absolute'
+                ,'vertical-align' : 'middle'
+                ,'margin-top' : ((this.o.width / 3) >> 0) + 'px'
+                ,'margin-left' : '-' + ((this.o.width * 3 / 4 + 2) >> 0) + 'px'
+                ,'border' : 0
+                ,'background' : 'none'
+                ,'font' : 'bold ' + ((this.o.width / s) >> 0) + 'px Arial'
+                ,'text-align' : 'center'
+                ,'color' : this.o.inputColor || this.o.fgColor
+                ,'padding' : '0px'
+                ,'-webkit-appearance': 'none'
+            })
+            || this.i.css({
+                'width' : '0px'
+                ,'visibility' : 'hidden'
+            });
         };
 
         this.change = function (v) {
-			this.cv = v;
+            this.cv = v;
             this.$.val(v);
         };
 
@@ -614,31 +614,31 @@
             c.lineCap = this.lineCap;
 
             this.o.cursor
-                && (sat = eat - this.cursorExt)
-                && (eat = eat + this.cursorExt);
+            && (sat = eat - this.cursorExt)
+            && (eat = eat + this.cursorExt);
 
             c.beginPath();
-                c.strokeStyle = this.o.bgColor;
-                c.arc(this.xy, this.xy, this.radius, this.endAngle, this.startAngle, true);
+            c.strokeStyle = this.o.bgColor;
+            c.arc(this.xy, this.xy, this.radius, this.endAngle, this.startAngle, true);
             c.stroke();
 
             if (this.o.displayPrevious) {
                 ea = this.startAngle + this.angle(this.v);
                 sa = this.startAngle;
                 this.o.cursor
-                    && (sa = ea - this.cursorExt)
-                    && (ea = ea + this.cursorExt);
+                && (sa = ea - this.cursorExt)
+                && (ea = ea + this.cursorExt);
 
                 c.beginPath();
-                    c.strokeStyle = this.pColor;
-                    c.arc(this.xy, this.xy, this.radius, sa, ea, false);
+                c.strokeStyle = this.pColor;
+                c.arc(this.xy, this.xy, this.radius, sa, ea, false);
                 c.stroke();
                 r = (this.cv == this.v);
             }
 
             c.beginPath();
-                c.strokeStyle = r ? this.o.fgColor : this.fgColor ;
-                c.arc(this.xy, this.xy, this.radius, sat, eat, false);
+            c.strokeStyle = r ? this.o.fgColor : this.fgColor ;
+            c.arc(this.xy, this.xy, this.radius, sat, eat, false);
             c.stroke();
         };
 
